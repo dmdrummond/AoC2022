@@ -1,17 +1,29 @@
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    fun buildList(input: List<String>): List<Int> {
+        val calorieList = mutableListOf<Int>()
+        var calories = 0
+        input.forEach {
+            if (it.isEmpty()) {
+                calorieList.add(calories)
+                calories = 0
+            } else {
+                calories += (it.toInt())
+            }
+        }
+        calorieList.add(calories)
+        return calorieList
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
-    }
+    fun part1(input: List<Int>) = input.max()
+    fun part2(input: List<Int>) = input.sorted().takeLast(3).sum()
 
-    // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+    val parsedTestList = buildList(testInput)
+    check(part1(parsedTestList) == 24000)
+    check(part2(parsedTestList) == 45000)
 
     val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+    val parsedList = buildList(input)
+    println("Part 1: ${part1(parsedList)}")
+    println("Part 2: ${part2(parsedList)}")
 }
